@@ -5,7 +5,7 @@ const CategorySchema = new Schema({
     Category: {
         type: String,
     },
-    Satus: {
+    Status: {
         type: String,
         default: "Active"
     },

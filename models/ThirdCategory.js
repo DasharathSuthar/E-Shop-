@@ -13,7 +13,7 @@ const ThirdCategorySchema = new Schema({
     ThirdCategory: {
         type: String
     },
-    Satus: {
+    Status: {
         type: String,
         default: "Active"
     },

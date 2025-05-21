@@ -9,7 +9,7 @@ const SubCategorySchema = new Schema({
     SubCategory: {
         type: String
     },
-    Satus: {
+    Status: {
         type: String,
         default: "Active"
     },

@@ -14,12 +14,14 @@ import City from "./AdminPages/City"
 import Area from "./AdminPages/Area"
 import Products from "./AdminPages/Products"
 
+
 function App() {
 
   return (
     <>
       <BrowserRouter>
         <Routes>
+
           <Route path="/admin" element={<AdminMaster></AdminMaster>}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard></Dashboard>}></Route>
@@ -37,6 +39,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+
     </>
   )
 }
