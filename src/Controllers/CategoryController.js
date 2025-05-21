@@ -15,7 +15,17 @@ class CategoryController {
         .catch(error => console.log(error))
     }
 
-    
+    async getDataById(id) {
+        return await axios.get(`${this.URL}${id}`)
+        .then(response => response.data.Data)
+        .catch(error => console.log(error))
+    }
+
+    async updateData(id,Category) {
+        return await axios.put(`${this.URL}${id}`,Category)
+        .then(res => res.data)
+        .catch(error => console.log(error))
+    }
 
     async deleteData(id){
         return await axios.delete(`${this.URL}${id}`)
