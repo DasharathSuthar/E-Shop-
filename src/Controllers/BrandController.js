@@ -1,14 +1,13 @@
 import axios from "axios"
 
-class CategoryController {
-    URL = "http://localhost:8080/Category/";
+class BrandController {
+    URL = "http://localhost:8080/brand/"
 
     async postData(Data) {
         try {
             var response = await axios.post(this.URL, Data);
             return response.data;
         } catch (error) {
-            
             return error.response?.data || {
                 Message: "Something went wrong",
                 Code: 500
@@ -16,13 +15,14 @@ class CategoryController {
         }
     }
 
-
     async getData() {
-        return await axios.get(this.URL)
-            .then(response => (response.data.Data))
-            .catch(error => console.log(error))
+        try {
+            const response = await axios.get(this.URL)
+            return response.data.Data
+        } catch (error) {
+            return error
+        }
     }
-
     async getDataById(id) {
         return await axios.get(`${this.URL}${id}`)
             .then(response => response.data.Data)
@@ -43,4 +43,4 @@ class CategoryController {
 
 }
 
-export default CategoryController
+export default BrandController

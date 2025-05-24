@@ -3,17 +3,22 @@ import Brand from "../models/Brand.js";
 class BrandController {
     async insertData(body) {
         try {
+
+            const existingData = await Brand.findOne({ Brand: body.Brand })
+            if (existingData) {
+                return {
+                    Message: "Brand is already exists",
+                    Code: 409
+                }
+            }
+
             const newData = new Brand(body)
-            const savedData = await newData.save().then(response => ({
+            const savedData = await newData.save()
+            return ({
                 Message: "Data inserted Successfully",
-                Data: response,
+                Data: savedData,
                 Code: 200
-            })).catch(err => ({
-                Message: "Something went Wrong",
-                Error: err,
-                Code: 500
-            }))
-            return savedData;
+            })
         } catch (error) {
             return ({
                 Message: "Something went Wrong",

@@ -29,7 +29,6 @@ class CategoryController {
         }
     }
 
-
     async getData() {
         try {
             var data = await Category.find({});
@@ -46,6 +45,7 @@ class CategoryController {
             })
         }
     }
+    
     async getDataById(id) {
         try {
             var idData = await Category.findById(id);
