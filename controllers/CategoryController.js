@@ -17,7 +17,7 @@ class CategoryController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }
@@ -34,7 +34,7 @@ class CategoryController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }
@@ -50,7 +50,7 @@ class CategoryController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }

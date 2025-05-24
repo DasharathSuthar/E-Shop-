@@ -1,7 +1,7 @@
 import axios from "axios"
 
-class CategoryController {
-    URL = "http://localhost:8080/Category/";
+class SubCategoryController {
+    URL = "http://localhost:8080/subCategory/";
 
    async postData(Data) {
         return await axios.post(this.URL, Data)
@@ -35,4 +35,4 @@ class CategoryController {
 
 }
 
-export default CategoryController
+export default SubCategoryController

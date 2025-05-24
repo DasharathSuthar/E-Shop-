@@ -17,7 +17,7 @@ class SubCategoryController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }
@@ -25,7 +25,8 @@ class SubCategoryController {
 
     async getData() {
         try {
-            var data = await SubCategory.find({});
+            var data = await SubCategory.find().populate("CategoryId");
+           
             return ({
                 Message: "Data Geted",
                 Data: data,
@@ -34,7 +35,7 @@ class SubCategoryController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }
@@ -50,7 +51,7 @@ class SubCategoryController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }

@@ -10,14 +10,14 @@ class ProductController {
                 Code: 200
             })).catch(err => ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             }))
             return savedData;
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }
@@ -34,7 +34,7 @@ class ProductController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }
@@ -50,7 +50,7 @@ class ProductController {
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
-                Error: err,
+                Error: error,
                 Code: 500
             })
         }
