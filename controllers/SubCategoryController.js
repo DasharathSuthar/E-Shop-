@@ -1,19 +1,23 @@
+
 import SubCategory from "../models/SubCategory.js";
 
 class SubCategoryController {
     async insertData(body) {
         try {
+            const existingData = await SubCategory.findOne({ SubCategory: body.SubCategory })
+            if (existingData) {
+                return {
+                    Message: "SubCategory is already Exists",
+                    Code: 409
+                }
+            }
             const newData = new SubCategory(body)
-            const savedData = await newData.save().then(response => ({
-                Message: "Data inserted Successfully",
-                Data: response,
+            const savedData = await newData.save()
+            return {
+                Message: "Data inserted successfully",
+                Data: savedData,
                 Code: 200
-            })).catch(err => ({
-                Message: "Something went Wrong",
-                Error: err,
-                Code: 500
-            }))
-            return savedData;
+            };
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
@@ -26,7 +30,7 @@ class SubCategoryController {
     async getData() {
         try {
             var data = await SubCategory.find().populate("CategoryId");
-           
+
             return ({
                 Message: "Data Geted",
                 Data: data,

@@ -3,17 +3,22 @@ import ThirdCategory from "../models/ThirdCategory.js";
 class ThirdCategoryController {
     async insertData(body) {
         try {
+
+            const existingData = await ThirdCategory.findOne({ ThirdCategory: body.ThirdCategory })
+            if (existingData) {
+                return {
+                    Message: "ThirdCategory is already Exists",
+                    Code: 409
+                }
+            }
             const newData = new ThirdCategory(body)
-            const savedData = await newData.save().then(response => ({
-                Message: "Data inserted Successfully",
-                Data: response,
+            const savedData = await newData.save() 
+            
+            return {
+                Message: "Data inserted successfully",
+                Data: savedData,
                 Code: 200
-            })).catch(err => ({
-                Message: "Something went Wrong",
-                Error: err,
-                Code: 500
-            }))
-            return savedData;
+            };
         } catch (error) {
             return ({
                 Message: "Something went Wrong",

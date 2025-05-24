@@ -4,9 +4,16 @@ class SubCategoryController {
     URL = "http://localhost:8080/subCategory/";
 
    async postData(Data) {
-        return await axios.post(this.URL, Data)
-        .then(response => (response.data))
-        .catch(error  => error)
+        try {
+            const response = await axios.post(this.URL, Data);
+            return response.data;
+        } catch (error) {
+            // Extract proper error response from Axios error
+            return error.response?.data || {
+                Message: "Something went wrong",
+                Code: 500
+            };
+        }
     }
 
     async getData() {

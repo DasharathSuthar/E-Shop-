@@ -3,25 +3,32 @@ import Category from "../models/Category.js";
 class CategoryController {
     async insertData(body) {
         try {
-            const newData = new Category(body)
-            const savedData = await newData.save().then(response => ({
-                Message: "Data inserted Successfully",
-                Data: response,
+           
+            const existingData = await Category.findOne({ Category: body.Category }); 
+            if (existingData) {
+                return {
+                    Message: "Category already exists",
+                    Code: 409
+                };
+            }
+
+            const newData = new Category(body);
+            const savedData = await newData.save();
+
+            return {
+                Message: "Data inserted successfully",
+                Data: savedData,
                 Code: 200
-            })).catch(err => ({
-                Message: "Something went Wrong",
-                Error: err,
-                Code: 500
-            }))
-            return savedData;
+            };
         } catch (error) {
-            return ({
-                Message: "Something went Wrong",
+            return {
+                Message: "Something went wrong",
                 Error: error,
                 Code: 500
-            })
+            };
         }
     }
+
 
     async getData() {
         try {
