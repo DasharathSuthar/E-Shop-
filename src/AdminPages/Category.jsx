@@ -1,12 +1,12 @@
-import React, { createRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import CategoryController from '../Controllers/CategoryController';
 
 const Category = () => {
     var CategoryInt = new CategoryController();
-    var category = createRef()
-    var hidId = createRef()
+    var category = useRef()
    
     const [categoryList, setCategoryList] = useState();
+    const [editId,setEditId] = useState('')
 
     const GetData = async () => {
         var Data = await CategoryInt.getData()
@@ -26,27 +26,23 @@ const Category = () => {
             .catch(error => console.log(error));
     };
     const EditData = async (id) => {
-        console.log("edit id :", id);
-
+    
         await CategoryInt.getDataById(id).then(res => {
             category.current.value = res.Category
-            hidId.current.value = id
+            setEditId(id)
             document.querySelector("#AddBtn").classList.add("hidden")
             document.querySelector("#UpdateBtn").classList.remove("hidden")
         })
 
     }
     const UpdateData = async () => {
-        const id = hidId.current.value;
-        console.log(id);
-
         var Obj = {
             Category: category.current.value
         }
-        await CategoryInt.updateData(id, Obj).then(res => {
+        await CategoryInt.updateData(editId, Obj).then(res => {
             alert(res.Message)
             category.current.value = "";
-             document.querySelector("#AddBtn").classList.remove("hidden")
+            document.querySelector("#AddBtn").classList.remove("hidden")
             document.querySelector("#UpdateBtn").classList.add("hidden")
             GetData()
         })
@@ -98,9 +94,7 @@ const Category = () => {
                                 <td className='border border-black p-2'>
                                     <button className='px-5 py-2 rounded-lg bg-red-700 text-white text-center' onClick={() => DeleteData(item._id)}>Delete</button>
                                 </td>
-                                <td className='hidden'>
-                                    <input type="hidden" name="hidId" value="0" ref={hidId} />
-                                </td>
+                               
                             </tr>)
                         })}
                     </tbody>

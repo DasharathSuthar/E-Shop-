@@ -25,7 +25,7 @@ class ThirdCategoryController {
 
     async getData() {
         try {
-            var data = await ThirdCategory.find({});
+            var data = await ThirdCategory.find().populate("SubCategoryId").populate("CategoryId");
             return ({
                 Message: "Data Geted",
                 Data: data,

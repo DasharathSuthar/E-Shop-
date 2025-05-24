@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CategoryController from '../Controllers/CategoryController';
 import SubCategoryController from '../Controllers/SubCategoryController';
 
@@ -6,13 +6,13 @@ const SubCategory = () => {
     const CategoryInt = new CategoryController();
     const SubCategoryInt = new SubCategoryController();
 
-
     const [categoryList, setCategoryList] = useState([]);
     const [subCategoryList, setSubCategoryList] = useState([]);
     const [formData, setFormData] = useState({
         CategoryId: "",
         SubCategory: ""
     });
+    const [editId,setEditId] = useState('')
 
     const getCategoryData = async () => {
         const categoryData = await CategoryInt.getData();
@@ -38,6 +38,28 @@ const SubCategory = () => {
             .catch(error => console.log(error));
     };
 
+    const editData =async (id) =>{
+        await SubCategoryInt.getDataById(id).then(res => {
+            setFormData({
+                CategoryId : res.CategoryId,
+                SubCategory:res.SubCategory
+            })
+            setEditId(id)
+            document.querySelector('#AddBtn').classList.add("hidden")
+            document.querySelector('#UpdateBtn').classList.remove('hidden')
+        })
+    }
+
+    const UpdateData = async () => {
+        await SubCategoryInt.updateData(editId,formData).then(res => {
+            alert(res.Message)
+            setFormData({
+                CategoryId :"",
+                SubCategory:""
+            })
+            getSubCategoryData()
+        })
+    }
 
     const deleteSubCategory = async (id) => {
         const confirmed = window.confirm('Are you sure you want to delete this sub-category?');
@@ -65,10 +87,10 @@ const SubCategory = () => {
             <div className='p-4 flex justify-between items-center'>
                 <div>
                     <label htmlFor="subCategory" className='mr-4 uppercase'>Sub-Category Name</label>
-                    <input type="text" onChange={(e) => setFormData({ ...formData, SubCategory: e.target.value })} className='border-black border rounded-md p-1 mr-4' />
+                    <input type="text" value={formData.SubCategory} onChange={(e) => setFormData({ ...formData, SubCategory: e.target.value })} className='border-black border rounded-md p-1 mr-4' />
 
                     <select
-                        
+                        value={formData.CategoryId}
                         onChange={e => setFormData({ ...formData, CategoryId: e.target.value })}
                         className='border-black border rounded-md p-1 mr-4 text-black'
                     >
@@ -87,6 +109,7 @@ const SubCategory = () => {
                     >
                         Add Sub-Category
                     </button>
+                    <button id='UpdateBtn' className='py-2 px-5 ml-2 hidden bg-green-500 rounded-md text-white uppercase hover:bg-green-700 duration-300' onClick={UpdateData}>Update</button>
                 </div>
             </div>
 
@@ -110,7 +133,7 @@ const SubCategory = () => {
                                 <td className='border border-black p-2'>{item.SubCategory}</td>
                                 <td className='border border-black p-2'>{item.Status}</td>
                                 <td className='border border-black p-2'>
-                                    <button className='px-5 py-2 rounded-lg bg-blue-700 text-white'>Edit</button>
+                                    <button className='px-5 py-2 rounded-lg bg-blue-700 text-white' onClick={()=>{editData(item._id)}}>Edit</button>
                                 </td>
                                 <td className='border border-black p-2'>
                                     <button
