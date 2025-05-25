@@ -2,19 +2,19 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-    Category: {
+    CategoryId: {
         type: Schema.Types.ObjectId,
         ref: "Category"
     },
-    SubCategory: {
+    SubCategoryId: {
         type: Schema.Types.ObjectId,
         ref: "SubCategory"
     },
-    ThirdCategory: {
+    ThirdCategoryId: {
         type: Schema.Types.ObjectId,
         ref: "ThirdCategory"
     },
-    Brand: {
+    BrandId: {
         type: Schema.Types.ObjectId,
         ref: "Brand"
     },

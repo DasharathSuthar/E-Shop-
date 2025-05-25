@@ -3,17 +3,25 @@ import Product from "../models/Product.js";
 class ProductController {
     async insertData(body) {
         try {
+         
+            
+            var existingData = await Product.findOne({ ProductName: body.ProductName })
+            if (existingData) {
+                return {
+                    Message: "Product is already Exists",
+                    Code: 409
+                }
+            }
+
             const newData = new Product(body)
-            const savedData = await newData.save().then(response => ({
+            const savedData = await newData.save()
+
+            return ({
                 Message: "Data inserted Successfully",
-                Data: response,
+                Data: savedData,
                 Code: 200
-            })).catch(err => ({
-                Message: "Something went Wrong",
-                Error: error,
-                Code: 500
-            }))
-            return savedData;
+            })
+
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
@@ -25,7 +33,7 @@ class ProductController {
 
     async getData() {
         try {
-            var data = await Product.find({});
+            var data = await Product.find({}).populate("CategoryId").populate("SubCategoryId").populate("ThirdCategoryId").populate("BrandId");
             return ({
                 Message: "Data Geted",
                 Data: data,

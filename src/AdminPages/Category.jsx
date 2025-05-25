@@ -4,9 +4,9 @@ import CategoryController from '../Controllers/CategoryController';
 const Category = () => {
     var CategoryInt = new CategoryController();
     var category = useRef()
-   
+
     const [categoryList, setCategoryList] = useState();
-    const [editId,setEditId] = useState('')
+    const [editId, setEditId] = useState('')
 
     const GetData = async () => {
         var Data = await CategoryInt.getData()
@@ -26,7 +26,7 @@ const Category = () => {
             .catch(error => console.log(error));
     };
     const EditData = async (id) => {
-    
+
         await CategoryInt.getDataById(id).then(res => {
             category.current.value = res.Category
             setEditId(id)
@@ -48,6 +48,9 @@ const Category = () => {
         })
     }
     const DeleteData = async (id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this sub-category?');
+        if (!confirmed) return;
+        
         await CategoryInt.deleteData(id).then(res => (alert(res)))
         GetData()
     }
@@ -94,7 +97,7 @@ const Category = () => {
                                 <td className='border border-black p-2'>
                                     <button className='px-5 py-2 rounded-lg bg-red-700 text-white text-center' onClick={() => DeleteData(item._id)}>Delete</button>
                                 </td>
-                               
+
                             </tr>)
                         })}
                     </tbody>
