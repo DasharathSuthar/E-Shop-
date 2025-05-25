@@ -5,10 +5,12 @@ import cors from 'cors'
 import CategoryRoute from './Routes/CategoryRoute.js'
 import SubCategoryRoute from './Routes/SubCategoryRoute.js'
 import ThirdCategoryRoute from './Routes/ThirdCategoryRoute.js'
-import Brand from './Routes/BrandRoute.js'
-import Product from './Routes/ProductRoute.js'
-import Specification from './Routes/SpecificationRoute.js'
-import SpecificationOption from './Routes/SpecificationOptionRoute.js'
+import BrandRoute from './Routes/BrandRoute.js'
+import ProductRoute from './Routes/ProductRoute.js'
+import CountryRoute from './Routes/CountryRoute.js'
+import StateRoute from "./Routes/StateRoute.js"
+import SpecificationRoute from './Routes/SpecificationRoute.js'
+import SpecificationOptionRoute from './Routes/SpecificationOptionRoute.js'
 
 const app = express();
 
@@ -19,10 +21,12 @@ app.use(cors());
 app.use("/category", CategoryRoute)
 app.use("/subCategory",SubCategoryRoute)
 app.use("/thirdCategory",ThirdCategoryRoute)
-app.use("/brand",Brand)
-app.use("/product",Product)
-app.use("/specification",Specification)
-app.use("/specificationOption",SpecificationOption)
+app.use("/brand",BrandRoute)
+app.use("/product",ProductRoute)
+app.use("/country",CountryRoute)
+app.use("/state",StateRoute)
+app.use("/specification",SpecificationRoute)
+app.use("/specificationOption",SpecificationOptionRoute)
 
 const MongoURL = "mongodb://127.0.0.1:27017/E-ShopDB"
 

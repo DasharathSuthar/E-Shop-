@@ -5,7 +5,7 @@ import BrandController from '../Controllers/BrandController';
 const Brand = () => {
 
     var BrandInt = new BrandController()
-    
+
     const [brandList, setBrandList] = useState();
     const [formData, setFormData] = useState({
         Brand: ""
@@ -52,6 +52,9 @@ const Brand = () => {
         })
     }
     const DeleteData = async (id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this Data?');
+        if (!confirmed) return;
+
         await BrandInt.deleteData(id).then(res => (alert(res)))
         getBrandList()
     }

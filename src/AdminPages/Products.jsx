@@ -116,7 +116,7 @@ const Products = () => {
     }
 
     const deleteProductData = async (id) => {
-        const confirmed = window.confirm('Are you sure you want to delete this sub-category?');
+        const confirmed = window.confirm('Are you sure you want to delete this Product?');
         if (!confirmed) return;
         
         await ProductInt.deleteData(id).then(res => {

@@ -1,21 +1,80 @@
 import React, { useEffect, useState } from 'react'
-
+import CountryController from '../Controllers/CountryController';
 const Country = () => {
-    const CountryList = [
-        { Country: "United States", Status: "Active" },
-        { Country: "India   ", Status: "Active" },
-        { Country: "Brazil", Status: "Active" },
-        { Country: "Australia", Status: "Active" },
-        { Country: "Canada", Status: "Active" },
-    ];
-    const [countryList, setCountryList] = useState();
+    var CountryInt = new CountryController()
+    
+    const [countryList, setCountryList] = useState([]);
+    const [formData, setFormData] = useState({
+        Country: ""
+    })
+    const [editId, setEditId] = useState('')
+
+    const getCountryData = async () => {
+        const countryList = await CountryInt.getData()
+        setCountryList(countryList)
+    }
+
+    const insertCountryData = async () => {
+        await CountryInt.postData(formData).then(res => {
+            alert(res.Message)
+            setFormData({
+                Country: ""
+            })
+            getCountryData()
+        })
+    }
+
+    const editCountryData = async (id) => {
+        await CountryInt.getDataById(id).then(res => {
+            setEditId(id)
+            setFormData({
+                Country: res.Country
+            })
+            document.querySelector("#AddBtn").classList.add("hidden")
+            document.querySelector("#UpdateBtn").classList.remove("hidden")
+        })
+    }
+
+    const UpdateData = async () => {
+        await CountryInt.updateData(editId, formData).then(res => {
+            alert(res.Message)
+            setFormData({
+                Country: ""
+            })
+            document.querySelector("#AddBtn").classList.remove("hidden")
+            document.querySelector("#UpdateBtn").classList.add("hidden")
+            getCountryData()
+        })
+    }
+
+    const deleteCountryData = async (id) => {
+        const confirmed = window.confirm('Are you sure you want to delete this Data?');
+        if (!confirmed) return;
+
+        await CountryInt.deleteData(id).then(res => {
+            alert(res.Message)
+            getCountryData()
+        })
+    }
+
     useEffect(() => {
-        setCountryList(CountryList);
+        getCountryData()
     }, [])
+    
     return (
         <>
             <div className='pb-6 text-xl uppercase text-black'>
                 <h1>Country List</h1>
+            </div>
+            <div className='p-4 flex justify-between items-center'>
+                <div>
+                    <label htmlFor="Country" className='mr-4 uppercase '>Country Name </label>
+                    <input type="text" placeholder='Country Name' value={formData.Country} className='border-black border rounded-md p-1' onChange={(e) => setFormData({ Country: e.target.value })} />
+                </div>
+                <div>
+                    <button id='AddBtn' className='py-2 px-5 bg-blue-500 rounded-md text-white uppercase hover:bg-blue-700 duration-300' onClick={insertCountryData}>Add Country</button>
+                    <button id='UpdateBtn' className='py-2 px-5 ml-2 hidden bg-green-500 rounded-md text-white uppercase hover:bg-green-700 duration-300' onClick={UpdateData}>Update</button>
+                </div>
             </div>
             <div className="grid grid-cols-1">
                 <table className='text-center'>
@@ -30,15 +89,15 @@ const Country = () => {
                     </thead>
                     <tbody>
                         {(countryList || []).map((item, index) => {
-                            return (<tr key={index} >
+                            return (<tr key={item._id} >
                                 <td className='border border-black p-2'>{index + 1}</td>
                                 <td className='border border-black p-2'>{item.Country}</td>
                                 <td className='border border-black p-2'>{item.Status}</td>
                                 <td className='border border-black p-2'>
-                                    <button className='px-5 py-2 rounded-lg bg-blue-700 text-white text-center'>Edit</button>
+                                    <button className='px-5 py-2 rounded-lg bg-blue-700 text-white text-center' onClick={() => editCountryData(item._id)}>Edit</button>
                                 </td>
                                 <td className='border border-black p-2'>
-                                    <button className='px-5 py-2 rounded-lg bg-red-700 text-white text-center'>Delete</button>
+                                    <button className='px-5 py-2 rounded-lg bg-red-700 text-white text-center' onClick={() => deleteCountryData(item._id)}>Delete</button>
                                 </td>
                             </tr>)
                         })}

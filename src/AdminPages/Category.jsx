@@ -48,7 +48,7 @@ const Category = () => {
         })
     }
     const DeleteData = async (id) => {
-        const confirmed = window.confirm('Are you sure you want to delete this sub-category?');
+        const confirmed = window.confirm('Are you sure you want to delete this category?');
         if (!confirmed) return;
         
         await CategoryInt.deleteData(id).then(res => (alert(res)))

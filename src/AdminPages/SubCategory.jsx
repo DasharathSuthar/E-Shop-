@@ -12,7 +12,7 @@ const SubCategory = () => {
         CategoryId: "",
         SubCategory: ""
     });
-    const [editId,setEditId] = useState('')
+    const [editId, setEditId] = useState('')
 
     const getCategoryData = async () => {
         const categoryData = await CategoryInt.getData();
@@ -38,11 +38,11 @@ const SubCategory = () => {
             .catch(error => console.log(error));
     };
 
-    const editData =async (id) =>{
+    const editData = async (id) => {
         await SubCategoryInt.getDataById(id).then(res => {
             setFormData({
-                CategoryId : res.CategoryId,
-                SubCategory:res.SubCategory
+                CategoryId: res.CategoryId,
+                SubCategory: res.SubCategory
             })
             setEditId(id)
             document.querySelector('#AddBtn').classList.add("hidden")
@@ -51,12 +51,14 @@ const SubCategory = () => {
     }
 
     const UpdateData = async () => {
-        await SubCategoryInt.updateData(editId,formData).then(res => {
+        await SubCategoryInt.updateData(editId, formData).then(res => {
             alert(res.Message)
             setFormData({
-                CategoryId :"",
-                SubCategory:""
+                CategoryId: "",
+                SubCategory: ""
             })
+            document.querySelector('#AddBtn').classList.remove("hidden")
+            document.querySelector('#UpdateBtn').classList.add('hidden')
             getSubCategoryData()
         })
     }
@@ -133,7 +135,7 @@ const SubCategory = () => {
                                 <td className='border border-black p-2'>{item.SubCategory}</td>
                                 <td className='border border-black p-2'>{item.Status}</td>
                                 <td className='border border-black p-2'>
-                                    <button className='px-5 py-2 rounded-lg bg-blue-700 text-white' onClick={()=>{editData(item._id)}}>Edit</button>
+                                    <button className='px-5 py-2 rounded-lg bg-blue-700 text-white' onClick={() => { editData(item._id) }}>Edit</button>
                                 </td>
                                 <td className='border border-black p-2'>
                                     <button
