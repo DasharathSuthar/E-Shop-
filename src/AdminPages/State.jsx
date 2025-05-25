@@ -80,7 +80,7 @@ const State = () => {
             <div className='p-4 flex justify-between items-center'>
                 <div>
                     <label htmlFor="State" className='mr-4 uppercase'>State Name</label>
-                    <input type="text" value={formData.State} onChange={(e) => setFormData({ ...formData, State: e.target.value })} className='border-black border rounded-md p-1 mr-4' />
+                    <input type="text" placeholder='State Name' value={formData.State} onChange={(e) => setFormData({ ...formData, State: e.target.value })} className='border-black border rounded-md p-1 mr-4' />
 
                     <select
                         value={formData.CountryId}
