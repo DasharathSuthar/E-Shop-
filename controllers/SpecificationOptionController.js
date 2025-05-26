@@ -3,17 +3,23 @@ import SpecificationOption from "../models/SpecificationOption.js";
 class SpecificationOptionController {
     async insertData(body) {
         try {
+
+            const existingData = await SpecificationOption.findOne({ Value: body.Value })
+            if (existingData) {
+                return {
+                    Message: "Value is already Exists",
+                    Code: 409
+                }
+            }
+
             const newData = new SpecificationOption(body)
-            const savedData = await newData.save().then(response => ({
+            const savedData = await newData.save()
+            
+            return {
                 Message: "Data inserted Successfully",
-                Data: response,
+                Data: savedData,
                 Code: 200
-            })).catch(err => ({
-                Message: "Something went Wrong",
-                Error: err,
-                Code: 500
-            }))
-            return savedData;
+            };
         } catch (error) {
             return ({
                 Message: "Something went Wrong",
@@ -25,7 +31,7 @@ class SpecificationOptionController {
 
     async getData() {
         try {
-            var data = await SpecificationOption.find({});
+            var data = await SpecificationOption.find({}).populate('SpecificationId');
             return ({
                 Message: "Data Geted",
                 Data: data,

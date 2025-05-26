@@ -24,7 +24,7 @@ const SideBar = () => {
                         <li className='nav-list'><a href="/admin/area" className='py-2 block'><i className='mr-4 fa fa-location-arrow'></i>Area</a></li>
                         <li className='nav-list'><a href="/admin/specificationtype" className='py-2 block'><i className='mr-4 fab fa-schlix'></i>Specification Type</a></li>
                         <li className='nav-list'><a href="/admin/specificationoption" className='py-2 block'><i className='mr-4 fab fa-schlix'></i>Specification Option</a></li>
-                        <li><a href="#" className='py-2 block'><i className='mr-4 fas fa-fw fa-folder'></i>Report</a></li>
+                        <li className='nav-list'><a href="#" className='py-2 block'><i className='mr-4 fas fa-fw fa-folder'></i>Report</a></li>
                     </ul>
                 </div>
             </aside>
