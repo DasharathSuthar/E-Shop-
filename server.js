@@ -9,6 +9,8 @@ import BrandRoute from './Routes/BrandRoute.js'
 import ProductRoute from './Routes/ProductRoute.js'
 import CountryRoute from './Routes/CountryRoute.js'
 import StateRoute from "./Routes/StateRoute.js"
+import CityRoute from "./Routes/CityRoute.js"
+import AreaRoute from "./Routes/AreaRoute.js"
 import SpecificationRoute from './Routes/SpecificationRoute.js'
 import SpecificationOptionRoute from './Routes/SpecificationOptionRoute.js'
 
@@ -25,6 +27,8 @@ app.use("/brand",BrandRoute)
 app.use("/product",ProductRoute)
 app.use("/country",CountryRoute)
 app.use("/state",StateRoute)
+app.use("/city",CityRoute)
+app.use("/area",AreaRoute)
 app.use("/specification",SpecificationRoute)
 app.use("/specificationOption",SpecificationOptionRoute)
 
